@@ -52,7 +52,7 @@ fun CMorenoMusicAppTheme(
 
     MaterialTheme(
         colorScheme = colorScheme,
-        typography = Typography,
+        typography = montserratTypo,
         content = content
     )
 }
