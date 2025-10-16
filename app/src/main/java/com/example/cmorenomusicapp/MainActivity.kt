@@ -43,8 +43,7 @@ class MainActivity : ComponentActivity() {
                         composable <AlbumDetailScreenRoute>{ entry ->
                             val args = entry.toRoute<AlbumDetailScreenRoute>()
                             AlbumDetailScreen(
-                                id = args.id,
-                                innerPadding = innerPadding
+                                id = args.id
                             )
                         }
                     }

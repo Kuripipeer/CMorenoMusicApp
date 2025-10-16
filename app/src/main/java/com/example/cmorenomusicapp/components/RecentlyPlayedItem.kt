@@ -20,32 +20,35 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.example.cmorenomusicapp.models.Album
+import com.example.cmorenomusicapp.ui.theme.OnPurpleDark
 import com.example.cmorenomusicapp.ui.theme.TextPrimary
 import com.example.cmorenomusicapp.ui.theme.TextSecondary
 
 @Composable
 fun RecentlyPlayedItem(
-    album: Album,
+    album: Album?,
     onClick: () -> Unit
 ) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
+            .shadow(elevation = 8.dp, shape = RoundedCornerShape(24.dp))
             .clip(RoundedCornerShape(24.dp))
-            .background(Color.White.copy(alpha = 0.9f))
+            .background(OnPurpleDark)
             .clickable { onClick() }
             .padding(16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         AsyncImage(
-            model = album.image,
-            contentDescription = album.title,
+            model = album?.image,
+            contentDescription = album?.title,
             modifier = Modifier
                 .size(56.dp)
                 .clip(RoundedCornerShape(12.dp)),
@@ -53,16 +56,18 @@ fun RecentlyPlayedItem(
         )
         Spacer(modifier = Modifier.width(16.dp))
         Column(modifier = Modifier.weight(1f)) {
+            album?.title?.let {
+                Text(
+                    text = it,
+                    style = MaterialTheme.typography.titleMedium,
+                    color = TextPrimary,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier
+                        .padding(bottom = 5.dp)
+                )
+            }
             Text(
-                text = album.title,
-                style = MaterialTheme.typography.titleMedium,
-                color = TextPrimary,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier
-                    .padding(bottom = 5.dp)
-            )
-            Text(
-                text = "${album.artist} • Popular Song",
+                text = "${album?.artist} • Popular Song",
                 style = MaterialTheme.typography.bodySmall,
                 color = TextSecondary
             )
