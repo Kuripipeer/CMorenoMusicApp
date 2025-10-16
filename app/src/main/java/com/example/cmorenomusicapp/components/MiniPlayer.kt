@@ -1,8 +1,10 @@
 package com.example.cmorenomusicapp.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -32,15 +34,13 @@ import com.example.cmorenomusicapp.ui.theme.OnPurpleDarkSecondary
 import com.example.cmorenomusicapp.ui.theme.PurpleDark
 
 @Composable
-fun MiniPlayer(album: Album?) {
+fun MiniPlayer(album: Album?, modifier: Modifier = Modifier) {
     Surface(
-        color = PurpleDark,
-        shape = RoundedCornerShape(16.dp),
-        shadowElevation = 8.dp,
-        modifier = Modifier
-            .padding(15.dp)
+        color = PurpleDark.copy(alpha = 0.9f),
+        shape = RoundedCornerShape(32.dp),
+        modifier = modifier
             .fillMaxWidth()
-            .height(80.dp)
+            .height(90.dp)
     ) {
         Row (
             verticalAlignment = Alignment.CenterVertically,
@@ -51,15 +51,16 @@ fun MiniPlayer(album: Album?) {
                 contentDescription = album?.title,
                 modifier = Modifier
                     .size(52.dp)
-                    .clip(RoundedCornerShape(16.dp))
-                    .background(Color.White),
+                    .clip(RoundedCornerShape(16.dp)),
                 contentScale = ContentScale.Crop
             )
 
             Column(
                 modifier = Modifier
                     .weight(1f)
-                    .padding(start = 12.dp)
+                    .fillMaxHeight()
+                    .padding(start = 12.dp),
+                verticalArrangement = Arrangement.Center
             ) {
                 album?.title?.let {
                     Text(
@@ -68,14 +69,17 @@ fun MiniPlayer(album: Album?) {
                         style = MaterialTheme.typography.titleLarge,
                         fontWeight = FontWeight.Bold,
                         maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
+                        overflow = TextOverflow.Ellipsis,
+                        modifier = Modifier.padding(bottom = 5.dp)
                     )
                 }
                 album?.artist?.let {
                     Text(
                         text = it,
                         color = OnPurpleDarkSecondary,
-                        style = MaterialTheme.typography.titleMedium
+                        style = MaterialTheme.typography.titleMedium,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
                     )
                 }
             }
@@ -83,9 +87,9 @@ fun MiniPlayer(album: Album?) {
             Icon(
                 imageVector = Icons.Default.PlayArrow,
                 contentDescription = null,
-                tint = Color(0xFF3F206E),
+                tint = PurpleDark,
                 modifier = Modifier
-                    .size(36.dp)
+                    .size(42.dp)
                     .clip(CircleShape)
                     .background(Color.White)
                     .padding(8.dp)
