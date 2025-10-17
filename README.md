@@ -41,13 +41,7 @@ Comportamiento actual esperado:
 3. **Configura la versión de Android SDK**
    - Asegúrate de tener instalados los SDKs necesarios (compileSdk / targetSdk).
 
-4. **Variables/Endpoints**
-   - Si el proyecto consume un API propio, define el `BASE_URL` en `Constants.kt` o en la configuración Gradle.
-   ```kotlin
-   const val BASE_URL = "https://music.juanfrausto.com/api/"
-   ```
-
-5. **Ejecuta**
+4. **Ejecuta**
    - Selecciona un emulador o dispositivo físico.
    - Ejecuta desde Android Studio (▶️ Run).
 
