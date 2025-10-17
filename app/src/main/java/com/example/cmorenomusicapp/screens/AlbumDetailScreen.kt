@@ -34,6 +34,7 @@ import androidx.compose.ui.zIndex
 import com.example.cmorenomusicapp.components.AboutThisAlbumSection
 import com.example.cmorenomusicapp.components.AlbumDetailHeader
 import com.example.cmorenomusicapp.components.AlbumTracksList
+import com.example.cmorenomusicapp.components.ArtistInfo
 import com.example.cmorenomusicapp.components.MiniPlayer
 import com.example.cmorenomusicapp.components.RecentlyPlayedItem
 import com.example.cmorenomusicapp.models.Album
@@ -52,6 +53,7 @@ fun AlbumDetailScreen(id: String?) {
     val BASE_URL = "https://music.juanfrausto.com/api/"
     var album by remember { mutableStateOf<Album?>(null) }
     var loading by remember { mutableStateOf(true) }
+    var errorMsg by remember { mutableStateOf<String?>(null) }
 
     LaunchedEffect(true) {
         try {
@@ -69,6 +71,10 @@ fun AlbumDetailScreen(id: String?) {
         }catch (e: Exception) {
             Log.e("AlbumDetail", e.toString())
             loading = false
+            errorMsg = when (e) {
+                is java.net.UnknownHostException -> "Sin conexión a Internet. Por favor revisa tu conexión."
+                else -> "Error al cargar el álbum: ${e.localizedMessage ?: "intenta de nuevo"}"
+            }
         }
     }
 
@@ -137,31 +143,4 @@ fun AlbumDetailScreenPreview() {
     AlbumDetailScreen(
         id = "1",
     )
-}
-
-@Composable
-fun ArtistInfo(artist: String?) {
-    Surface(
-        color = Color.White,
-        shape = RoundedCornerShape(24.dp),
-        shadowElevation = 8.dp,
-        modifier = Modifier.padding(top = 16.dp)
-    ) {
-        Row(
-            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(
-                text = "Artist:",
-                fontWeight = FontWeight.Bold,
-                color = PurpleDark
-            )
-            Spacer(modifier = Modifier.width(4.dp))
-            Text(
-                text = artist ?: "Unknown Artist",
-                color = TextSecondary
-            )
-            Spacer(modifier = Modifier.width(12.dp))
-        }
-    }
 }
